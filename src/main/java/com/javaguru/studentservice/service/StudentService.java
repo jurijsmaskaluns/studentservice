@@ -6,6 +6,7 @@ import com.javaguru.studentservice.repository.StudentRepository;
 import com.javaguru.studentservice.validation.StudentNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -48,5 +49,9 @@ public class StudentService {
             throw new StudentNotFoundException("Student not found, id = " + id);
         }
         repository.deleteById(id);
+    }
+
+    public List<StudentEntity> findAllStudents() {
+        return repository.findAll();
     }
 }

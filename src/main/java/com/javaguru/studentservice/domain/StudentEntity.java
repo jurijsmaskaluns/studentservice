@@ -1,5 +1,6 @@
 package com.javaguru.studentservice.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,9 +10,15 @@ import java.util.Objects;
 @Table(name = "students")
 public class StudentEntity {
     @Id
+    @Column(name = "s_id", unique = true, nullable = false)
     private String id;
+
+    @Column(name = "name", nullable = false, length = 40)
     private String name;
+
+    @Column(name = "lastname", nullable = false, length = 150)
     private String lastname;
+
 
     public String getId() {
         return id;
