@@ -1,10 +1,12 @@
 package com.javaguru.studentservice.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.javaguru.studentservice.dto.StudentDto;
+
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
 
 @Entity
 @Table(name = "students")
@@ -12,13 +14,25 @@ public class StudentEntity {
     @Id
     @Column(name = "s_id", unique = true, nullable = false)
     private String id;
-
     @Column(name = "name", nullable = false, length = 40)
     private String name;
-
     @Column(name = "lastname", nullable = false, length = 150)
     private String lastname;
 
+
+    private Set<CourseEntity> courseEntitySet = new HashSet<>();
+    @ManyToMany
+    @JoinTable(name = "studentcourse",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    public Set<CourseEntity> getCourseEntitySet() {
+        return courseEntitySet;
+    }
+
+
+    public void setCourseEntitySet(Set<CourseEntity> courseEntitySet) {
+        this.courseEntitySet = courseEntitySet;
+    }
 
     public String getId() {
         return id;
