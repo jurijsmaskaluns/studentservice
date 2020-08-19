@@ -1,5 +1,7 @@
 package com.javaguru.studentservice.domain;
 
+import com.javaguru.studentservice.dto.StudentDto;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -7,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "courses")
-public class CourseEntity {
+public class CourseEntity extends StudentDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,18 +18,18 @@ public class CourseEntity {
     private String c_name;
 
 
-    private Set<StudentEntity> studentEntitySet = new HashSet<>();
+    private Set<StudentEntity> student = new HashSet<>();
     @ManyToMany
     @JoinTable(name = "studentcourse",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
     public Set<StudentEntity> getStudentEntitySet() {
-        return studentEntitySet;
+        return student;
     }
 
 
     public void setStudentEntitySet(Set<StudentEntity> studentEntitySet) {
-        this.studentEntitySet = studentEntitySet;
+        this.student = studentEntitySet;
     }
 
     public Long getC_id() {

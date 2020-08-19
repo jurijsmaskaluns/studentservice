@@ -20,18 +20,18 @@ public class StudentEntity {
     private String lastname;
 
 
-    private Set<CourseEntity> courseEntitySet = new HashSet<>();
+    private Set<CourseEntity> course = new HashSet<>();
     @ManyToMany
     @JoinTable(name = "studentcourse",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     public Set<CourseEntity> getCourseEntitySet() {
-        return courseEntitySet;
+        return course;
     }
 
 
     public void setCourseEntitySet(Set<CourseEntity> courseEntitySet) {
-        this.courseEntitySet = courseEntitySet;
+        this.course = courseEntitySet;
     }
 
     public String getId() {
