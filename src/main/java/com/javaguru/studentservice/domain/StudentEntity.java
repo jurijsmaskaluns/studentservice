@@ -19,12 +19,12 @@ public class StudentEntity {
     @Column(name = "lastname", nullable = false, length = 150)
     private String lastname;
 
-
-    private Set<CourseEntity> course = new HashSet<>();
     @ManyToMany
     @JoinTable(name = "studentcourse",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private Set<CourseEntity> course = new HashSet<>();
+
     public Set<CourseEntity> getCourseEntitySet() {
         return course;
     }

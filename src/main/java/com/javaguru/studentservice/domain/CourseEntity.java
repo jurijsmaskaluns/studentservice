@@ -17,19 +17,19 @@ public class CourseEntity extends StudentDto {
     @Column(name = "c_name", nullable = false, length = 100)
     private String c_name;
 
-
-    private Set<StudentEntity> student = new HashSet<>();
     @ManyToMany
     @JoinTable(name = "studentcourse",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
+    private Set<StudentEntity> students = new HashSet<>();
+
     public Set<StudentEntity> getStudentEntitySet() {
-        return student;
+        return students;
     }
 
 
     public void setStudentEntitySet(Set<StudentEntity> studentEntitySet) {
-        this.student = studentEntitySet;
+        this.students = studentEntitySet;
     }
 
     public Long getC_id() {
