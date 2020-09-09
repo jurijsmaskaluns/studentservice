@@ -1,17 +1,42 @@
 package com.javaguru.studentservice.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "students")
 public class StudentEntity {
     @Id
+    @Column(name = "s_id", unique = true, nullable = false)
     private String id;
+    @Column(name = "name", nullable = false, length = 40)
     private String name;
+    @Column(name = "lastname", nullable = false, length = 150)
     private String lastname;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "studentcourse",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    private List<CourseEntity> courseList;
+
+    public StudentEntity() {
+    }
+
+    public StudentEntity(String id, String name, String lastname) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+    }
+
+    public List<CourseEntity> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<CourseEntity> courseList) {
+        this.courseList = courseList;
+    }
 
     public String getId() {
         return id;

@@ -1,5 +1,6 @@
 package com.javaguru.studentservice.controller;
 
+import com.javaguru.studentservice.domain.StudentEntity;
 import com.javaguru.studentservice.dto.StudentDto;
 import com.javaguru.studentservice.service.StudentService;
 import com.javaguru.studentservice.validation.StudentNotFoundException;
@@ -7,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/students")
@@ -23,16 +21,8 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<StudentDto> findAllStudents() {
-        List<StudentDto> studentDtos = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            studentDtos.add(new StudentDto(
-                    UUID.randomUUID().toString(),
-                    "TEST_USER_FIRST_NAME_" + i,
-                    "TEST_USER_LAST_NAME_" + i));
-
-        }
-        return studentDtos;
+    public List<StudentEntity> findAllStudents() {
+        return studentService.findAllStudents();
     }
 
     @GetMapping("/{id}")

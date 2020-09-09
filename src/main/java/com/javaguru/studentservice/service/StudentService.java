@@ -6,6 +6,7 @@ import com.javaguru.studentservice.repository.StudentRepository;
 import com.javaguru.studentservice.validation.StudentNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -22,15 +23,17 @@ public class StudentService {
         studentEntity.setId(UUID.randomUUID().toString());
         studentEntity.setName(studentDto.getName());
         studentEntity.setLastname(studentDto.getLastName());
+//        studentEntity.setCourseList();
         repository.save(studentEntity);
         return new StudentDto(studentEntity.getId(), studentEntity.getName(), studentEntity.getLastname());
 
     }
-    public StudentDto updateStudent(StudentDto studentDto,String id){
+    public StudentDto updateStudent(StudentDto studentDto, String id){
         StudentEntity studentEntity = new StudentEntity();
         studentEntity.setId(id);
         studentEntity.setName(studentDto.getName());
         studentEntity.setLastname(studentDto.getLastName());
+ //       studentEntity.setCourseEntitySet(studentDto.getCourse());
         repository.save(studentEntity);
         return new StudentDto(studentEntity.getId(), studentEntity.getName(), studentEntity.getLastname());
     }
@@ -48,5 +51,9 @@ public class StudentService {
             throw new StudentNotFoundException("Student not found, id = " + id);
         }
         repository.deleteById(id);
+    }
+
+    public List<StudentEntity> findAllStudents() {
+        return repository.findAll();
     }
 }

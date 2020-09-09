@@ -1,12 +1,42 @@
 package com.javaguru.studentservice.dto;
 
-import java.util.Objects;
+import com.javaguru.studentservice.domain.CourseEntity;
+import com.javaguru.studentservice.domain.StudentEntity;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 public class StudentDto {
 
     private String id;
     private String name;
     private String lastName;
+    private List<CourseDto> courseList;
+
+    @Transactional
+    public List<StudentDto> getStudentDtoList(List<StudentEntity> studentList) {
+        List<StudentDto> studentDtoList = new ArrayList<>();
+
+        for (StudentEntity studentEntity : studentList) {
+            courseList = new ArrayList<>();
+
+            StudentDto studentDto = new StudentDto();
+            studentDto.setId(studentEntity.getId());
+            studentDto.setName(studentEntity.getName());
+            studentDto.setLastName(studentEntity.getLastname());
+
+            for (CourseEntity courseEntity : studentEntity.getCourseList()) {
+                CourseDto courseDto = new CourseDto();
+
+                courseDto.setC_id(courseEntity.getC_id());
+                courseDto.setC_name(courseEntity.getC_name());
+            }
+            studentDto.setCourseList(courseList);
+            studentDtoList.add(studentDto);
+        }
+
+        return studentDtoList;
+    }
 
     public StudentDto() {
     }
@@ -63,5 +93,13 @@ public class StudentDto {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<CourseDto> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<CourseDto> courseList) {
+        this.courseList = courseList;
     }
 }
