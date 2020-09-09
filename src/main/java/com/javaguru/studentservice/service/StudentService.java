@@ -23,26 +23,26 @@ public class StudentService {
         studentEntity.setId(UUID.randomUUID().toString());
         studentEntity.setName(studentDto.getName());
         studentEntity.setLastname(studentDto.getLastName());
-        studentEntity.setCourseEntitySet(studentDto.getCourse());
+//        studentEntity.setCourseList();
         repository.save(studentEntity);
-        return new StudentDto(studentEntity.getId(), studentEntity.getName(), studentEntity.getLastname(),studentEntity.getCourseEntitySet());
+        return new StudentDto(studentEntity.getId(), studentEntity.getName(), studentEntity.getLastname());
 
     }
-    public StudentDto updateStudent(StudentDto studentDto,String id){
+    public StudentDto updateStudent(StudentDto studentDto, String id){
         StudentEntity studentEntity = new StudentEntity();
         studentEntity.setId(id);
         studentEntity.setName(studentDto.getName());
         studentEntity.setLastname(studentDto.getLastName());
-        studentEntity.setCourseEntitySet(studentDto.getCourse());
+ //       studentEntity.setCourseEntitySet(studentDto.getCourse());
         repository.save(studentEntity);
-        return new StudentDto(studentEntity.getId(), studentEntity.getName(), studentEntity.getLastname(), studentEntity.getCourseEntitySet());
+        return new StudentDto(studentEntity.getId(), studentEntity.getName(), studentEntity.getLastname());
     }
 
 
 
     public StudentDto findById(String id) {
         return repository.findById(id)
-                .map(entity -> new StudentDto(entity.getId(), entity.getName(), entity.getLastname(),entity.getCourseEntitySet()))
+                .map(entity -> new StudentDto(entity.getId(), entity.getName(), entity.getLastname()))
                 .orElseThrow(() -> new StudentNotFoundException("Student not found, id = " + id));
     }
 

@@ -1,12 +1,8 @@
 package com.javaguru.studentservice.domain;
 
-import com.javaguru.studentservice.dto.StudentDto;
-
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-
 
 @Entity
 @Table(name = "students")
@@ -19,19 +15,27 @@ public class StudentEntity {
     @Column(name = "lastname", nullable = false, length = 150)
     private String lastname;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "studentcourse",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private Set<CourseEntity> course = new HashSet<>();
+    private List<CourseEntity> courseList;
 
-    public Set<CourseEntity> getCourseEntitySet() {
-        return course;
+    public StudentEntity() {
     }
 
+    public StudentEntity(String id, String name, String lastname) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+    }
 
-    public void setCourseEntitySet(Set<CourseEntity> courseEntitySet) {
-        this.course = courseEntitySet;
+    public List<CourseEntity> getCourseList() {
+        return courseList;
+    }
+
+    public void setCourseList(List<CourseEntity> courseList) {
+        this.courseList = courseList;
     }
 
     public String getId() {

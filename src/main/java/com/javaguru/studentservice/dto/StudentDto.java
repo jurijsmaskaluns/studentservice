@@ -1,26 +1,50 @@
 package com.javaguru.studentservice.dto;
 
 import com.javaguru.studentservice.domain.CourseEntity;
+import com.javaguru.studentservice.domain.StudentEntity;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class StudentDto {
 
     private String id;
     private String name;
     private String lastName;
-    private Set<CourseEntity> course = new HashSet<>();
+    private List<CourseDto> courseList;
+
+    @Transactional
+    public List<StudentDto> getStudentDtoList(List<StudentEntity> studentList) {
+        List<StudentDto> studentDtoList = new ArrayList<>();
+
+        for (StudentEntity studentEntity : studentList) {
+            courseList = new ArrayList<>();
+
+            StudentDto studentDto = new StudentDto();
+            studentDto.setId(studentEntity.getId());
+            studentDto.setName(studentEntity.getName());
+            studentDto.setLastName(studentEntity.getLastname());
+
+            for (CourseEntity courseEntity : studentEntity.getCourseList()) {
+                CourseDto courseDto = new CourseDto();
+
+                courseDto.setC_id(courseEntity.getC_id());
+                courseDto.setC_name(courseEntity.getC_name());
+            }
+            studentDto.setCourseList(courseList);
+            studentDtoList.add(studentDto);
+        }
+
+        return studentDtoList;
+    }
 
     public StudentDto() {
     }
 
-    public StudentDto(String id, String name, String lastName, Set<CourseEntity> course) {
+    public StudentDto(String id, String name, String lastName) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
-        this.course = course;
     }
 
     @Override
@@ -30,13 +54,12 @@ public class StudentDto {
         StudentDto that = (StudentDto) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(name, that.name) &&
-                Objects.equals(lastName, that.lastName) &&
-                Objects.equals(course, that.course);
+                Objects.equals(lastName, that.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, lastName, course);
+        return Objects.hash(id, name, lastName);
     }
 
     @Override
@@ -45,7 +68,6 @@ public class StudentDto {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", course=" + course +
                 '}';
     }
 
@@ -73,11 +95,11 @@ public class StudentDto {
         this.lastName = lastName;
     }
 
-    public Set<CourseEntity> getCourse() {
-        return course;
+    public List<CourseDto> getCourseList() {
+        return courseList;
     }
 
-    public void setCourse(Set<CourseEntity> course) {
-        this.course = course;
+    public void setCourseList(List<CourseDto> courseList) {
+        this.courseList = courseList;
     }
 }

@@ -3,13 +3,13 @@ package com.javaguru.studentservice.domain;
 import com.javaguru.studentservice.dto.StudentDto;
 
 import javax.persistence.*;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "courses")
-public class CourseEntity extends StudentDto {
+public class CourseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,15 +21,22 @@ public class CourseEntity extends StudentDto {
     @JoinTable(name = "studentcourse",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
-    private Set<StudentEntity> students = new HashSet<>();
+    private List<StudentEntity> studentsList;
 
-    public Set<StudentEntity> getStudentEntitySet() {
-        return students;
+    public CourseEntity() {
     }
 
+    public CourseEntity(Long c_id, String c_name) {
+        this.c_id = c_id;
+        this.c_name = c_name;
+    }
 
-    public void setStudentEntitySet(Set<StudentEntity> studentEntitySet) {
-        this.students = studentEntitySet;
+    public List<StudentEntity> getStudents() {
+        return studentsList;
+    }
+
+    public void setStudents(List<StudentEntity> studentsList) {
+        this.studentsList = studentsList;
     }
 
     public Long getC_id() {
